@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, IconButton, } from "@mui/material";
 import {
     DataGrid,
@@ -40,7 +40,7 @@ const PAGE_SIZE = 10;
 
 
 const PortFolioHomePage = () => {
-    const { tableData, setTableData, setAllData } = useStore();
+    const { tableData, setTableData } = useStore();
     const [totalRecords, setTotalRecords] = useState();
     const columns = [
         { field: 'month_year', headerName: 'Date', width: 200, editable: false, },
@@ -190,8 +190,6 @@ const PortFolioHomePage = () => {
             try {
                 const response = await createUpdateRecord(
                     null,
-                    // `fetch_merged_records/?page=${paginationModel.page + 1}&page_size=${paginationModel.pageSize}`,
-                    // `list_of_records_groupby_deliverydirector_and_monthyear/?page=${paginationModel.page + 1}&page_size=${10}`,
                     `list_of_group_records_by_deliverydirector_and_monthyear/?page=${paginationModel.page + 1}&page_size=${10}`,
                     null,
                     "GET"
@@ -200,38 +198,51 @@ const PortFolioHomePage = () => {
                 console.log(response, 'response')
 
                 setTotalRecords(response.total_records);
-                setTableData(response.data);
+                // Ensure each row has a unique id for DataGrid
+                const rowsWithId = response.data.map((row, index) => ({
+                    id: row.portfolio_id || row.id || index, // Use a stable unique key if available
+                    ...row
+                }));
+                // Only update if data actually changes
+                if (JSON.stringify(rowsWithId) !== JSON.stringify(tableData)) {
+                    setTableData(rowsWithId);
+                }
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         }
 
         fetchTableData();
-    }, [paginationModel, setTableData]);
+    }, [paginationModel, setTableData, tableData]); // Remove setTableData from dependencies
 
-    const fetchAllTableData = useCallback(async () => {
-        try {
-            const response = await createUpdateRecord(
-                null,
-                `list_of_group_records_by_deliverydirector_and_monthyear/?page=${1}&page_size=${totalRecords}`,
-                null,
-                "GET"
-            );
+    // const fetchAllTableData = useCallback(async () => {
+    //     try {
+    //         const response = await createUpdateRecord(
+    //             null,
+    //             `list_of_group_records_by_deliverydirector_and_monthyear/?page=${1}&page_size=${10}`,
+    //             null,
+    //             "GET"
+    //         );
 
-            const rowsWithId = response.data.map((row, index) => ({
-                id: index,
-                ...row
-            }));
+    //         const rowsWithId = response.data.map((row, index) => ({
+    //             id: index,
+    //             ...row
+    //         }));
 
-            setAllData(rowsWithId);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }, [setAllData, totalRecords]);
+    //         setAllData(rowsWithId);
+    //     } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //     }
+    // }, [setAllData]);
 
+    // useEffect(() => {
+    //     fetchAllTableData();
+    // }, [fetchAllTableData]);
+
+    console.log('PortFolioHomePage render');
     useEffect(() => {
-        fetchAllTableData();
-    }, [fetchAllTableData]);
+        console.log('Effect triggered, paginationModel:', paginationModel);
+    }, [paginationModel]);
 
     return (
         <Box sx={{ background: "#F8F6FD", padding: '40px', margin: '30px', borderRadius: '20px' }}>
