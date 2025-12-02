@@ -1,7 +1,7 @@
 {
   "name": "pmo_upgrade",
   "version": "0.1.0",
-  "homepage": "https://sasmita-rout.github.io/existing-ats-sasm/",
+  "homepage": "https://sasmita-rout.github.io/portfolio/",
   "private": true,
   "dependencies": {
     "@azure/msal-browser": "^4.12.0",
