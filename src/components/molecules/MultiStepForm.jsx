@@ -494,22 +494,22 @@ export default function MultipleStepForm({
       <Box sx={{ display: "flex", flexDirection: "row-reverse", mt: 3, paddingTop: "150px", paddingBottom: "50px", paddingRight: "45px" }}>
         <Button
           onClick={handleNext}
-          disabled={(!editProject &&((viewProject && activeStep === stepLabels.length - 1) || !viewProject &&
+          disabled={(!editProject &&((viewProject && activeStep === stepLabels.length - 1) || (!viewProject &&
             activeStep === 0 && (
               !protfolioStatus ||
               !inFlight ||
               !projectsOnTrack ||
               !projectsOnTrack ||
-              !newProjects) ||
-            !viewProject && activeStep === 1 &&
+              !newProjects)) ||
+            (!viewProject && activeStep === 1 &&
             (!genAITech ||
               !genAiStepper ||
               !valueAdds ||
               !avbPvbDetails ||
-              !valueBoardEvaluation) ||
-            !viewProject && activeStep === 2 &&
-            (!costImpact || !unbilledResources || !growthImpact) ||
-            !viewProject && activeStep === 3 &&
+              !valueBoardEvaluation)) ||
+            (!viewProject && activeStep === 2 &&
+            (!costImpact || !unbilledResources || !growthImpact)) ||
+            (!viewProject && activeStep === 3 &&
             (!techinal ||
               !product ||
               !manager ||
@@ -521,17 +521,17 @@ export default function MultipleStepForm({
               !additions ||
               !attritionRisk ||
               !topPerformers ||
-              !topPerformersDesc) ||
-            !viewProject && activeStep === 4 &&
-            (!csat || !feedback || !critical || !nonCritical || !qbr) ||
-            !viewProject && activeStep === 5 &&
+              !topPerformersDesc)) ||
+            (!viewProject && activeStep === 4 &&
+            (!csat || !feedback || !critical || !nonCritical || !qbr)) ||
+            (!viewProject && activeStep === 5 &&
             (!totalRevenue ||
               !budget ||
               !totalSpend ||
               !gm ||
               !totalInvoice ||
               !invoiceNotRealized ||
-              !sunkCosts)
+              !sunkCosts))
           ))}
           sx={{ marginLeft: "20px", width: "114px", height: "40px" }}
           variant="contained"

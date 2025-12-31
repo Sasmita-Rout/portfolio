@@ -185,6 +185,7 @@ function PortFolioStatus() {
       setSunkCosts(row.sunk_costs)
       setSpend(row.forecasting_accuracy_spend)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewProject]);
 
   useEffect(() => {
@@ -263,6 +264,7 @@ function PortFolioStatus() {
       CreateUpdateData();
 
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSubmit]);
 
   console.log(selectedDeliveryDirector, "Delivery Director", `${selectedMonth} ${selectedYear}`, "Selected Month and Year")
