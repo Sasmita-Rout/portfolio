@@ -2,6 +2,7 @@
   "name": "pmo_upgrade",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/pmo_portfolio",
   "dependencies": {
     "@azure/msal-browser": "^4.12.0",
     "@base-ui-components/react": "^1.0.0-alpha.6",
